@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		781D30591FEA478100AB93B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D30581FEA478100AB93B2 /* AppDelegate.m */; };
-		781D305C1FEA478100AB93B2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D305B1FEA478100AB93B2 /* ViewController.m */; };
+		781D305C1FEA478100AB93B2 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781D305B1FEA478100AB93B2 /* ViewController.mm */; };
 		781D305F1FEA478100AB93B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 781D305D1FEA478100AB93B2 /* Main.storyboard */; };
 		781D30611FEA478100AB93B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 781D30601FEA478100AB93B2 /* Assets.xcassets */; };
 		781D30641FEA478100AB93B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 781D30621FEA478100AB93B2 /* LaunchScreen.storyboard */; };
 		781D30671FEA478100AB93B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D30661FEA478100AB93B2 /* main.m */; };
 		781D30711FEA478100AB93B2 /* testTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D30701FEA478100AB93B2 /* testTests.m */; };
 		781D307C1FEA478100AB93B2 /* testUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D307B1FEA478100AB93B2 /* testUITests.m */; };
+		781D308C1FEA493700AB93B2 /* GTPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D308B1FEA493700AB93B2 /* GTPreviewView.m */; };
+		781D30901FEA499500AB93B2 /* GTCaptureOutputUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781D308F1FEA499500AB93B2 /* GTCaptureOutputUtils.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +41,7 @@
 		781D30571FEA478100AB93B2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		781D30581FEA478100AB93B2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		781D305A1FEA478100AB93B2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		781D305B1FEA478100AB93B2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		781D305B1FEA478100AB93B2 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		781D305E1FEA478100AB93B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		781D30601FEA478100AB93B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		781D30631FEA478100AB93B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +53,10 @@
 		781D30771FEA478100AB93B2 /* testUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		781D307B1FEA478100AB93B2 /* testUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testUITests.m; sourceTree = "<group>"; };
 		781D307D1FEA478100AB93B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		781D308B1FEA493700AB93B2 /* GTPreviewView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTPreviewView.m; sourceTree = "<group>"; };
+		781D308D1FEA495500AB93B2 /* GTPreviewView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTPreviewView.h; sourceTree = "<group>"; };
+		781D308E1FEA497600AB93B2 /* GTCaptureOutputUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTCaptureOutputUtils.h; sourceTree = "<group>"; };
+		781D308F1FEA499500AB93B2 /* GTCaptureOutputUtils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GTCaptureOutputUtils.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,10 +107,12 @@
 		781D30561FEA478100AB93B2 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				781D308A1FEA490100AB93B2 /* Utils */,
+				781D30891FEA48FC00AB93B2 /* View */,
 				781D30571FEA478100AB93B2 /* AppDelegate.h */,
 				781D30581FEA478100AB93B2 /* AppDelegate.m */,
 				781D305A1FEA478100AB93B2 /* ViewController.h */,
-				781D305B1FEA478100AB93B2 /* ViewController.m */,
+				781D305B1FEA478100AB93B2 /* ViewController.mm */,
 				781D305D1FEA478100AB93B2 /* Main.storyboard */,
 				781D30601FEA478100AB93B2 /* Assets.xcassets */,
 				781D30621FEA478100AB93B2 /* LaunchScreen.storyboard */,
@@ -130,6 +138,24 @@
 				781D307D1FEA478100AB93B2 /* Info.plist */,
 			);
 			path = testUITests;
+			sourceTree = "<group>";
+		};
+		781D30891FEA48FC00AB93B2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				781D308B1FEA493700AB93B2 /* GTPreviewView.m */,
+				781D308D1FEA495500AB93B2 /* GTPreviewView.h */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		781D308A1FEA490100AB93B2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				781D308E1FEA497600AB93B2 /* GTCaptureOutputUtils.h */,
+				781D308F1FEA499500AB93B2 /* GTCaptureOutputUtils.mm */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,8 +291,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				781D305C1FEA478100AB93B2 /* ViewController.m in Sources */,
+				781D305C1FEA478100AB93B2 /* ViewController.mm in Sources */,
+				781D30901FEA499500AB93B2 /* GTCaptureOutputUtils.mm in Sources */,
 				781D30671FEA478100AB93B2 /* main.m in Sources */,
+				781D308C1FEA493700AB93B2 /* GTPreviewView.m in Sources */,
 				781D30591FEA478100AB93B2 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
