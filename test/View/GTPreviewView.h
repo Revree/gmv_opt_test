@@ -1,8 +1,8 @@
 //
 //  GTPreviewView.h
-//  test
+//  gmv_opt
 //
-//  Created by Andrea Chen on 12/19/17.
+//  Created by Andrea Chen on 12/14/17.
 //  Copyright © 2017 Andrea Chen. All rights reserved.
 //
 
@@ -11,3 +11,18 @@
 
 
 #endif /* GTPreviewView_h */
+#import <UIKit/UIKit.h>
+
+@class GTPreviewView;
+
+@protocol GTPreviewViewDelegate <NSObject>
+@optional
+- (void)previewViewMotionShakeDetected;
+
+@end
+
+@interface GTPreviewView : UIImageView
+
+@property (nonatomic,weak) IBOutlet id<GTPreviewViewDelegate>delegate;
+
+@end
