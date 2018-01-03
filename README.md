@@ -1,6 +1,6 @@
 # gmv_opt_test
-Do not contain opencv2 framework and GMV library
-problems:
+1. Do not contain opencv2 framework and GMV library
+2. problems:
 i). how to make it work under protrait orientation?
 
 ii). how to track more points at the same time?
