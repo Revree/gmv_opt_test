@@ -117,6 +117,21 @@ int frameid = 0;
     self->previewLayer.position = CGPointMake(CGRectGetMidX(self->previewLayer.frame),
                                               CGRectGetMidY(self->previewLayer.frame));
 }
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                         duration:(NSTimeInterval)duration {
+    // Camera rotation needs to be manually set when rotation changes.
+    if (self->previewLayer) {
+        if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
+            self->previewLayer.connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+        } else if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+            self->previewLayer.connection.videoOrientation = AVCaptureVideoOrientationPortraitUpsideDown;
+        } else if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) {
+            self->previewLayer.connection.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
+        } else if (toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+            self->previewLayer.connection.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
+        }
+    }
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -314,6 +329,7 @@ int frameid = 0;
         yScale = videoBox.size.height / clap.size.width;
     }
     
+    NSLog(@"box %f %f %f %f",videoBox.size.width,videoBox.size.height,videoBox.origin.x,videoBox.origin.y);
     
     dispatch_sync(dispatch_get_main_queue(), ^{
         _previewView.image = imageToDisplay;
@@ -590,3 +606,4 @@ int frameid = 0;
 }
 
 @end
+
