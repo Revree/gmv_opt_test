@@ -25,7 +25,7 @@ int maxCount = 100;
 double qLevel = 0.1;
 double minDist = 10;
 const int32_t MAX_FPS = 30;
-const CGSize resolutionSize = CGSizeMake(640,480);
+const CGSize resolutionSize = CGSizeMake(352,288);
 
 CGFloat xScale = 1;
 CGFloat yScale = 1;
@@ -75,7 +75,6 @@ int frameid = 0;
 
 
 @end
-
 
 
 @implementation ViewController
@@ -184,24 +183,15 @@ int frameid = 0;
     return resultPoint;
 }
 
-/*
- - (void)setLastKnownDeviceOrientation:(UIDeviceOrientation)orientation {
- if (orientation != UIDeviceOrientationUnknown &&
- orientation != UIDeviceOrientationFaceUp &&
- orientation != UIDeviceOrientationFaceDown) {
- self->lastKnownDeviceOrientation = orientation;
- }
- }
- */
-- (void)setupCameraPreview {
-    self->previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self->_session];
-    [self->previewLayer setBackgroundColor:[[UIColor whiteColor] CGColor]];
-    [self->previewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
-    CALayer *rootLayer = [self->placeHolder layer];
-    [rootLayer setMasksToBounds:YES];
-    [self->previewLayer setFrame:[rootLayer bounds]];
-    [rootLayer addSublayer:self->previewLayer];
+
+- (void)setLastKnownDeviceOrientation:(UIDeviceOrientation)orientation {
+    if (orientation != UIDeviceOrientationUnknown &&
+        orientation != UIDeviceOrientationFaceUp &&
+        orientation != UIDeviceOrientationFaceDown) {
+        self->lastKnownDeviceOrientation = orientation;
+    }
 }
+
 
 
 // Create and configure a capture session and start it running
@@ -214,7 +204,7 @@ int frameid = 0;
     // Configure the session to produce lower resolution video frames, if your
     // processing algorithm can cope. We'll specify medium quality for the
     // chosen device.
-    _session.sessionPreset = AVCaptureSessionPreset640x480;
+    _session.sessionPreset = AVCaptureSessionPreset352x288;
     
     // Find a suitable AVCaptureDevice
     _device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
@@ -252,6 +242,18 @@ int frameid = 0;
     [_session startRunning];
 }
 
+- (void)setupCameraPreview {
+    self->previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self->_session];
+    [self->previewLayer setBackgroundColor:[[UIColor whiteColor] CGColor]];
+    [self->previewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
+    CALayer *rootLayer = [self->placeHolder layer];
+    [rootLayer setMasksToBounds:YES];
+    [self->previewLayer setFrame:[rootLayer bounds]];
+    [rootLayer addSublayer:self->previewLayer];
+}
+
+
+
 - (AVCaptureDeviceInput *)cameraForPosition:(AVCaptureDevicePosition)desiredPosition {
     for (AVCaptureDevice *device in [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {
         if ([device position] == desiredPosition) {
@@ -266,11 +268,23 @@ int frameid = 0;
     return nil;
 }
 
+- (void)updateCaptureOrientation
+{
+    AVCaptureConnection *captureConnection = [[[[_session outputs] firstObject] connections] firstObject];
+    //captureConnection.videoMirrored = YES;
+    
+    if ([captureConnection isVideoOrientationSupported])
+    {
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        [captureConnection setVideoOrientation:(AVCaptureVideoOrientation)orientation];
+    }
+}
+
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
 {
     [GTCaptureOutputUtils convertYUVSampleBuffer:sampleBuffer toGrayscaleMat:gray];
-    //connection.videoOrientation = (AVCaptureVideoOrientation)UIInterfaceOrientationPortrait;
+    //connection.videoOrientation = (AVCaptureVideoOrientation)UIInterfaceOrientationLandscapeLeft;
     
     gray.copyTo(image);
     
@@ -282,12 +296,12 @@ int frameid = 0;
     
     
     //Define orientation
-    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+    //UIDeviceOrientation deviceOrientation = UIDeviceOrientationPortrait;
     //NSLog(@"%c %c",(char)deviceOrientation,(char)lastKnownDeviceOrientation);
     GMVImageOrientation orientation = [GMVUtility
-                                       imageOrientationFromOrientation:deviceOrientation
+                                       imageOrientationFromOrientation:UIDeviceOrientationLandscapeRight
                                        withCaptureDevicePosition:devicePosition
-                                       defaultDeviceOrientation:lastKnownDeviceOrientation];
+                                       defaultDeviceOrientation:UIDeviceOrientationPortrait];
     NSDictionary *options = @{
                               GMVDetectorImageOrientation : @(orientation)
                               };
@@ -296,21 +310,20 @@ int frameid = 0;
     
     // Detect features using GMVDetector.
     NSArray<GMVFaceFeature *> *faces = [self->faceDetector featuresInImage:image options:options];
-    NSLog(@"Detected %lu face(s).", (unsigned long)[faces count]);
+    //NSLog(@"Detected %lu face(s).", (unsigned long)[faces count]);
     
-    // Assume AVLayerVideoGravityResizeAspect
     // The video frames captured by the camera are a different size than the video preview.
     // Calculates the scale factors and offset to properly display the features.
     CMFormatDescriptionRef fdesc = CMSampleBufferGetFormatDescription(sampleBuffer);
     CGRect clap = CMVideoFormatDescriptionGetCleanAperture(fdesc, false);
     CGSize parentFrameSize = self->previewLayer.frame.size;
     
+    // Assume AVLayerVideoGravityResizeAspect
     CGFloat cameraRatio = clap.size.height / clap.size.width;
     CGFloat viewRatio = parentFrameSize.width / parentFrameSize.height;
     CGFloat xScale = 1;
     CGFloat yScale = 1;
     CGRect videoBox = CGRectZero;
-    
     if (viewRatio > cameraRatio) {
         videoBox.size.width = parentFrameSize.height * clap.size.width / clap.size.height;
         videoBox.size.height = parentFrameSize.height;
@@ -329,11 +342,14 @@ int frameid = 0;
         yScale = videoBox.size.height / clap.size.width;
     }
     
-    NSLog(@"box %f %f %f %f",videoBox.size.width,videoBox.size.height,videoBox.origin.x,videoBox.origin.y);
+    //NSLog(@"box %f %f %f %f",videoBox.size.width,videoBox.size.height,videoBox.origin.x,videoBox.origin.y);
     
     dispatch_sync(dispatch_get_main_queue(), ^{
         _previewView.image = imageToDisplay;
         frameid++;
+        for (UIView *featureView in self->overlayView.subviews) {
+            [featureView removeFromSuperview];
+        }
         
         // Remove previously added feature views.
         //CGFloat scale = 0;
@@ -341,11 +357,26 @@ int frameid = 0;
         
         for(GMVFaceFeature *face in faces){
             CGPoint point_nose,point_botMouth,point_lefteye,point_righteye;
+            
+            CGRect faceRect = [self scaledRect:face.bounds
+                                        xScale:xScale
+                                        yScale:yScale
+                                        offset:videoBox.origin];
+            
             if (face.hasNoseBasePosition) {
                 point_nose = [self scaledPoint:face.noseBasePosition
                                         xScale:xScale
                                         yScale:yScale
                                         offset:videoBox.origin];
+                NSLog(@"nose %f %f",point_nose.x,point_nose.y);
+                NSInteger width = 10;
+                CGRect circleRect = CGRectMake(point_nose.x - width / 2, point_nose.y - width / 2, width, width);
+                UIView *circleView = [[UIView alloc] initWithFrame:circleRect];
+                circleView.layer.cornerRadius = width / 2;
+                circleView.alpha = 0.7;
+                circleView.backgroundColor = [UIColor darkGrayColor];
+                [self->overlayView addSubview:circleView];
+                
                 
             }
             if (face.hasBottomMouthPosition) {
@@ -353,20 +384,22 @@ int frameid = 0;
                                             xScale:xScale
                                             yScale:yScale
                                             offset:videoBox.origin];
-                _touchPoint = cv::Point2f(point_botMouth.x,point_botMouth.y);
-                _addRemovePt = true;
+                
             }
             if(face.hasLeftEyePosition){
                 point_lefteye = [self scaledPoint:face.bottomMouthPosition
                                            xScale:xScale
                                            yScale:yScale
                                            offset:videoBox.origin];
+                
+                
             }
             if(face.hasRightEarPosition){
                 point_righteye = [self scaledPoint:face.bottomMouthPosition
                                             xScale:xScale
                                             yScale:yScale
                                             offset:videoBox.origin];
+                
             }
             /* if(frameid%10==0){
              NSLog(@"time %d.",frameid);
@@ -406,6 +439,12 @@ int frameid = 0;
         {
             if(_addRemovePt)
             {
+                /* test code -- compair
+                 if(norm(_touchPointall[i]-points[1][i])<=5){
+                 _addRemovePt = false;
+                 continue;
+                 }
+                 */
                 if(norm(_touchPoint - points[1][i]) <= 5)
                 {
                     _addRemovePt = false;
@@ -425,6 +464,15 @@ int frameid = 0;
     
     if(_addRemovePt && points[1].size() < (size_t)MAX_POINTS_COUNT)
     {
+        /* test code -- upload points
+         for(size_t i=0;i < _touchPointall.size();i++){
+         cv::vector<cv::Point2f> temp;
+         temp.push_back(_touchPointall[i]);
+         cornerSubPix(gray,temp, _winSize,cv::Size(-1,-1),_termcrit);
+         points[1].push_back(temp[0]);
+         }
+         _addRemovePt = false;
+         */
         cv::vector<cv::Point2f> tmp;
         tmp.push_back(_touchPoint);
         //tmp.push_back(_touchPoint1);
@@ -458,18 +506,6 @@ int frameid = 0;
         device.activeVideoMinFrameDuration = CMTimeMake(1, frameRate);
         device.activeVideoMaxFrameDuration = CMTimeMake(1, frameRate);
         [device unlockForConfiguration];
-    }
-}
-
-
-- (void)updateCaptureOrientation
-{
-    AVCaptureConnection *captureConnection = [[[[_session outputs] firstObject] connections] firstObject];
-    
-    if ([captureConnection isVideoOrientationSupported])
-    {
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        [captureConnection setVideoOrientation:(AVCaptureVideoOrientation)orientation];
     }
 }
 
@@ -563,33 +599,31 @@ int frameid = 0;
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)didClickCreamButton:(id)sender {
-    //[videoCamera_ start];
-}
 
 #pragma mark - Gesture recongnizer
-/*
- - (IBAction)tap:(UITapGestureRecognizer *)sender
- {
- CGPoint locationInView = [sender locationInView:_previewView];
- 
- UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
- 
- CGFloat scale = 0;
- 
- if (UIInterfaceOrientationIsLandscape(orientation)) {
- scale = resolutionSize.width / _previewView.bounds.size.width;
- }
- else
- {
- scale = resolutionSize.height / _previewView.bounds.size.width;
- }
- NSLog(@"scale %f, location %f %f",scale,locationInView.x,locationInView.y);
- 
- _touchPoint = cv::Point2f(locationInView.x * scale,locationInView.y * scale);
- _addRemovePt = true;
- }
- */
+
+- (IBAction)tap:(UITapGestureRecognizer *)sender
+{
+    CGPoint locationInView = [sender locationInView:_previewView];
+    
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    CGFloat scale = 0;
+    
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        scale = resolutionSize.width / _previewView.bounds.size.width;
+    }
+    else
+    {
+        scale = resolutionSize.height / _previewView.bounds.size.width;
+    }
+    
+    
+    _touchPoint = cv::Point2f(locationInView.x * scale,locationInView.y * scale);
+    NSLog(@"scale %f, %f",_touchPoint.x,_touchPoint.y);
+    _addRemovePt = true;
+}
+
 
 - (IBAction)doubleTap:(UITapGestureRecognizer *)sender
 {
@@ -606,3 +640,4 @@ int frameid = 0;
 }
 
 @end
+
