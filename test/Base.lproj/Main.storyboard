@@ -1,39 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_0" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
-    <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-    </dependencies>
-    <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ru4-fx-Sxo">
-                                <rect key="frame" x="24" y="64" width="272" height="414"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="303.75" y="284.15492957746477"/>
-        </scene>
-    </scenes>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<device id="retina4_0" orientation="portrait">
+<adaptation id="fullscreen"/>
+</device>
+<dependencies>
+<deployment identifier="iOS"/>
+<plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+<capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+</dependencies>
+<scenes>
+<!--Delegate-->
+<scene sceneID="tne-QT-ifu">
+<objects>
+<viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+<layoutGuides>
+<viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+<viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+</layoutGuides>
+<view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+<rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+<autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+<subviews>
+<view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y0M-Ux-tUu" customClass="GTPreviewView">
+<rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+<color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+<gestureRecognizers/>
+<connections>
+<outlet property="delegate" destination="BYZ-38-t0r" id="GNy-KN-aR3"/>
+<outletCollection property="gestureRecognizers" destination="AUW-Sf-had" appends="YES" id="Z5s-aj-g7C"/>
+<outletCollection property="gestureRecognizers" destination="KYu-Gj-bou" appends="YES" id="MVy-hf-ju7"/>
+</connections>
+</view>
+<view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u14-Zc-CZM" userLabel="placeholder">
+<rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+<color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+</view>
+<view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c46-0j-mQg" userLabel="overlay">
+<rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+<color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+</view>
+</subviews>
+<color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+<constraints>
+<constraint firstAttribute="trailing" secondItem="c46-0j-mQg" secondAttribute="trailing" id="21x-4e-rMz"/>
+<constraint firstItem="Y0M-Ux-tUu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="90" id="Ap3-8n-qmT"/>
+<constraint firstItem="Y0M-Ux-tUu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="EXQ-IX-P3Q"/>
+<constraint firstAttribute="bottom" secondItem="c46-0j-mQg" secondAttribute="bottom" id="NqG-oV-TcF"/>
+<constraint firstAttribute="trailing" secondItem="u14-Zc-CZM" secondAttribute="trailing" id="P4g-mr-jKr"/>
+<constraint firstAttribute="bottom" secondItem="Y0M-Ux-tUu" secondAttribute="bottom" constant="90" id="RSG-bN-kCl"/>
+<constraint firstItem="u14-Zc-CZM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="UXv-D4-j9V"/>
+<constraint firstAttribute="trailing" secondItem="Y0M-Ux-tUu" secondAttribute="trailing" id="WYJ-8e-cO7"/>
+<constraint firstAttribute="bottom" secondItem="u14-Zc-CZM" secondAttribute="bottom" id="p6c-re-KD4"/>
+<constraint firstItem="c46-0j-mQg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="qha-tj-lBl"/>
+<constraint firstItem="c46-0j-mQg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tX5-jE-zeN"/>
+<constraint firstItem="u14-Zc-CZM" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="vRw-TE-ioL"/>
+</constraints>
+</view>
+<nil key="simulatedStatusBarMetrics"/>
+<connections>
+<outlet property="_doubleTapGestureRecognizer" destination="KYu-Gj-bou" id="O3E-tL-9lC"/>
+<outlet property="_previewView" destination="Y0M-Ux-tUu" id="zGf-uy-kHa"/>
+<outlet property="_tapGestureRecognizer" destination="AUW-Sf-had" id="4vg-rY-oVp"/>
+<outlet property="overlayView" destination="c46-0j-mQg" id="XL7-KS-DEm"/>
+<outlet property="placeHolder" destination="u14-Zc-CZM" id="OiO-ng-e67"/>
+</connections>
+</viewController>
+<placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+<tapGestureRecognizer id="AUW-Sf-had">
+<connections>
+<action selector="tap:" destination="BYZ-38-t0r" id="geb-yg-AYl"/>
+</connections>
+</tapGestureRecognizer>
+<tapGestureRecognizer numberOfTapsRequired="2" id="KYu-Gj-bou" userLabel="Double Tap Gesture Recognizer">
+<connections>
+<action selector="doubleTap:" destination="BYZ-38-t0r" id="pKw-eQ-I4d"/>
+</connections>
+</tapGestureRecognizer>
+</objects>
+<point key="canvasLocation" x="750" y="360"/>
+</scene>
+</scenes>
 </document>
-
-
