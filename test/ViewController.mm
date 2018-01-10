@@ -20,7 +20,7 @@ using namespace cv;
 
 
 string window_name = "optical flow tracking";
-const int MAX_POINTS_COUNT = 10;
+const int MAX_POINTS_COUNT = 1;
 int maxCount = 100;
 double qLevel = 0.1;
 double minDist = 10;
@@ -50,9 +50,7 @@ int frameid = 0;
     
     
     Point2f                 _touchPoint;
-    Point2f                 _touchPoint1;
-    Point2f                 _touchPoint2;
-    Point2f                 _touchPoint3;
+    vector<Point2f>         _touchPointall;
     bool                    _addRemovePt;
     
     
@@ -319,30 +317,30 @@ int frameid = 0;
     CGSize parentFrameSize = self->previewLayer.frame.size;
     
     // Assume AVLayerVideoGravityResizeAspect
-    CGFloat cameraRatio = clap.size.height / clap.size.width;
+    CGFloat cameraRatio = clap.size.width / clap.size.height;
     CGFloat viewRatio = parentFrameSize.width / parentFrameSize.height;
     CGFloat xScale = 1;
     CGFloat yScale = 1;
     CGRect videoBox = CGRectZero;
     if (viewRatio > cameraRatio) {
-        videoBox.size.width = parentFrameSize.height * clap.size.width / clap.size.height;
+        videoBox.size.width = parentFrameSize.height * clap.size.height / clap.size.width;
         videoBox.size.height = parentFrameSize.height;
         videoBox.origin.x = (parentFrameSize.width - videoBox.size.width) / 2;
         videoBox.origin.y = (videoBox.size.height - parentFrameSize.height) / 2;
         
-        xScale = videoBox.size.width / clap.size.width;
-        yScale = videoBox.size.height / clap.size.height;
+        xScale = videoBox.size.width / clap.size.height;
+        yScale = videoBox.size.height / clap.size.width;
     } else {
         videoBox.size.width = parentFrameSize.width;
-        videoBox.size.height = clap.size.width * (parentFrameSize.width / clap.size.height);
+        videoBox.size.height = clap.size.height * (parentFrameSize.width / clap.size.width);
         videoBox.origin.x = (videoBox.size.width - parentFrameSize.width) / 2;
         videoBox.origin.y = (parentFrameSize.height - videoBox.size.height) / 2;
         
-        xScale = videoBox.size.width / clap.size.height;
-        yScale = videoBox.size.height / clap.size.width;
+        xScale = videoBox.size.width / clap.size.width;
+        yScale = videoBox.size.height / clap.size.height;
     }
     
-    //NSLog(@"box %f %f %f %f",videoBox.size.width,videoBox.size.height,videoBox.origin.x,videoBox.origin.y);
+    //NSLog(@"camera rate %f view rate %f xscale %f yscale %f",cameraRatio,viewRatio,xScale,yScale);
     
     dispatch_sync(dispatch_get_main_queue(), ^{
         _previewView.image = imageToDisplay;
@@ -352,11 +350,11 @@ int frameid = 0;
         }
         
         // Remove previously added feature views.
-        //CGFloat scale = 0;
-        //scale = resolutionSize.height / _previewView.bounds.size.width;
+        CGFloat scale = 0;
+        scale = resolutionSize.height / _previewView.bounds.size.width;
         
         for(GMVFaceFeature *face in faces){
-            CGPoint point_nose,point_botMouth,point_lefteye,point_righteye;
+            CGPoint point_nose,point_botMouth,point_lefteye,point_righteye = CGPointZero;
             
             CGRect faceRect = [self scaledRect:face.bounds
                                         xScale:xScale
@@ -401,16 +399,21 @@ int frameid = 0;
                                             offset:videoBox.origin];
                 
             }
-            /* if(frameid%10==0){
-             NSLog(@"time %d.",frameid);
-             _touchPoint = cv::Point2f(point_nose.x * scale,point_nose.y * scale);
-             _touchPoint1 = cv::Point2f(point_botMouth.x * scale,point_botMouth.y * scale);
-             _touchPoint2 = cv::Point2f(point_lefteye.x * scale,point_lefteye.y * scale);
-             _touchPoint3 = cv::Point2f(point_righteye.x * scale,point_righteye.y * scale);
-             NSLog(@"%f,%f,%f,%f",_touchPoint.x,_touchPoint1.x,_touchPoint2.x,_touchPoint3.x);
-             _addRemovePt = true;
-             }
-             */
+            if(frameid%10==0){
+                NSLog(@"time %d.",frameid);
+                /*
+                 _touchPointall.push_back(point_nose);
+                 _touchPointall.push_back(point_botMouth);
+                 _touchPointall.push_back(point_lefteye);
+                 _touchPointall.push_back(point_righteye);
+                 //NSLog(@"%f,%f,%f,%f",_touchPoint.x,_touchPoint1.x,_touchPoint2.x,_touchPoint3.x);
+                 _addRemovePt = true;
+                 */
+                _touchPoint = cv::Point2f((320 - point_nose.x) * scale ,point_nose.y*scale-90);
+                NSLog(@"scale1 %f, %f",_touchPoint.x,_touchPoint.y);
+                _addRemovePt = true;
+            }
+            
             
         }
     });
@@ -439,16 +442,21 @@ int frameid = 0;
         {
             if(_addRemovePt)
             {
-                /* test code -- compair
+                //test code -- compair
+                /*
                  if(norm(_touchPointall[i]-points[1][i])<=5){
                  _addRemovePt = false;
+                 NSLog(@"accepted");
                  continue;
                  }
                  */
-                if(norm(_touchPoint - points[1][i]) <= 5)
+                if(norm(_touchPoint - points[1][i]) <= 5 or _touchPoint==cv::Point2f(0.0,0.0))
                 {
                     _addRemovePt = false;
                     continue;
+                }
+                if(norm(_touchPoint - points[1][i])>= 10){
+                    points[1][i]=_touchPoint;
                 }
             }
             
@@ -456,7 +464,8 @@ int frameid = 0;
                 continue;
             
             points[1][k++] = points[1][i];
-            circle(image, points[1][i], 10, cv::Scalar(0,255,0), -1, 8);
+            circle(image, points[1][i], 5, cv::Scalar(0,255,0), -1, 8);
+            //NSLog(@"points position %f %f",points[1][i].x,points[1][i].y);
             
         }
         points[1].resize(k);
@@ -640,4 +649,3 @@ int frameid = 0;
 }
 
 @end
-
