@@ -360,7 +360,7 @@ int gloableflag = 0;
         
         for(GMVFaceFeature *face in faces){
             CGPoint point_nose,point_Mouth,point_lefteye,point_righteye = CGPointZero;
-            _touchPointall.clear();
+            
             
             CGRect faceRect = [self scaledRect:face.bounds
                                         xScale:xScale
@@ -411,9 +411,9 @@ int gloableflag = 0;
             //Point2f testpoint =Point2f((320 - 0.0) * scale ,0.0*scale-90);
             //NSLog(@"test point %f %f",testpoint.x,testpoint.y);
             
-            if(frameid%5==0){
+            if(frameid%2==0){
                 //NSLog(@"time %d.",frameid);
-                
+                _touchPointall.clear();
                 _touchPointall.push_back(point_nose_push);
                 _touchPointall.push_back(point_mouth_push);
                 _touchPointall.push_back(point_lefteye_push);
@@ -455,15 +455,23 @@ int gloableflag = 0;
         {
             if(_addRemovePt)
             {
-                if(norm(_touchPointall[i]-points[1][i])<=5 or _touchPointall[i]==cv::Point2f(288,-90))
+                if( _touchPointall[i]==cv::Point2f(288,-90)){
+                    continue;
+                }
+                if(norm(_touchPointall[i]-points[1][i])<=3)
                 {
                     NSLog(@"accpeted");
                 }
                 
-                if(norm(_touchPointall[i] - points[1][i])>= 10)
+                if(norm(_touchPointall[i] - points[1][i])>= 10 && norm(_touchPointall[i] - points[1][i])<=20)
                 {
                     points[1][i]=Point2f((points[1][i].x + _touchPointall[i].x)/2.0,(points[1][i].y+ _touchPointall[i].y)/2.0);
                     //points[1][i] = _touchPointall[i];
+                    NSLog(@"wrong points, adjusting");
+                }
+                if(norm(_touchPointall[i] - points[1][i])>20){
+                    points[1][i] = _touchPointall[i];
+                    NSLog(@"FATALE ERROR");
                 }
             }
             
@@ -704,4 +712,3 @@ int gloableflag = 0;
 }
 
 @end
-
