@@ -1,13 +1,11 @@
 # gmv_opt_test
+### Things to know
 1. Do not contain opencv2 framework and GMV library
-2. problems:
-i). how to make it work under protrait orientation?
-  fixed
+2. Main code is in ViewController.mm
+3. Preview is in gray scale
 
-ii). how to track more points at the same time?
+### Things to solve
+1. The optical flow part really need to improve. Since there are not enough 'good features' on human face, i.e.corners, the optical flow part sometimes goes wrong.
+2. Mark the points in RGB image? hmmmm, still need to learn how.
 
-iii). how to convert GMV(rgb) and optical flow(gray) into one preview image
- fixed
 
-iv). why does the point mark wrongly on the preview?
-  fixed
