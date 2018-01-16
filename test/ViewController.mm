@@ -274,7 +274,7 @@ int gloableflag = 0;
 - (void)updateCaptureOrientation
 {
     AVCaptureConnection *captureConnection = [[[[_session outputs] firstObject] connections] firstObject];
-    //captureConnection.videoMirrored = YES;
+    captureConnection.videoMirrored = YES;
     
     if ([captureConnection isVideoOrientationSupported])
     {
@@ -347,7 +347,7 @@ int gloableflag = 0;
     
     //NSLog(@"camera rate %f view rate %f xscale %f yscale %f",cameraRatio,viewRatio,xScale,yScale);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_sync(dispatch_get_main_queue(), ^{
         _previewView.image = imageToDisplay;
         frameid++;
         for (UIView *featureView in self->overlayView.subviews) {
@@ -411,9 +411,10 @@ int gloableflag = 0;
             //Point2f testpoint =Point2f((320 - 0.0) * scale ,0.0*scale-90);
             //NSLog(@"test point %f %f",testpoint.x,testpoint.y);
             
-            if(frameid%2==0){
+            if(frameid%5==0){
                 //NSLog(@"time %d.",frameid);
                 _touchPointall.clear();
+                gloableflag = 0;
                 _touchPointall.push_back(point_nose_push);
                 _touchPointall.push_back(point_mouth_push);
                 _touchPointall.push_back(point_lefteye_push);
@@ -453,6 +454,7 @@ int gloableflag = 0;
         size_t i;
         for(i = 0; i<_touchPointall.size();i++)
         {
+            
             if(_addRemovePt)
             {
                 if( _touchPointall[i]==cv::Point2f(288,-90)){
@@ -481,6 +483,7 @@ int gloableflag = 0;
         }
         
     }
+    
     /*
      size_t i, k;
      for(i = k = 0; i < points[1].size(); i++)
@@ -527,7 +530,7 @@ int gloableflag = 0;
      }
      */
     
-    if(_addRemovePt && points[1].size() < (size_t)MAX_POINTS_COUNT && gloableflag == 0)
+    if(_addRemovePt && gloableflag == 0)
     {
         //test code -- upload points
         
@@ -712,3 +715,4 @@ int gloableflag = 0;
 }
 
 @end
+
