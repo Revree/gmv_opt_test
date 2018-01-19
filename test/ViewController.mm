@@ -24,7 +24,7 @@ const int MAX_POINTS_COUNT = 4;
 int maxCount = 100;
 double qLevel = 0.1;
 double minDist = 10;
-const int32_t MAX_FPS = 30;
+const int32_t MAX_FPS = 24;
 const CGSize resolutionSize = CGSizeMake(352,288);
 
 CGFloat xScale = 1;
@@ -309,11 +309,10 @@ int gloableflag = 0;
                               GMVDetectorImageOrientation : @(orientation)
                               };
     
-    
-    
     // Detect features using GMVDetector.
     NSArray<GMVFaceFeature *> *faces = [self->faceDetector featuresInImage:imagegmv options:options];
     NSLog(@"Detected %lu face(s).", (unsigned long)[faces count]);
+    
     
     // The video frames captured by the camera are a different size than the video preview.
     // Calculates the scale factors and offset to properly display the features.
@@ -349,7 +348,9 @@ int gloableflag = 0;
     
     dispatch_sync(dispatch_get_main_queue(), ^{
         _previewView.image = imageToDisplay;
+        CGPoint point_nose,point_Mouth,point_lefteye,point_righteye = CGPointZero;
         frameid++;
+        
         for (UIView *featureView in self->overlayView.subviews) {
             [featureView removeFromSuperview];
         }
@@ -359,7 +360,7 @@ int gloableflag = 0;
         scale = resolutionSize.height / _previewView.bounds.size.width;
         
         for(GMVFaceFeature *face in faces){
-            CGPoint point_nose,point_Mouth,point_lefteye,point_righteye = CGPointZero;
+            
             
             
             CGRect faceRect = [self scaledRect:face.bounds
@@ -411,7 +412,7 @@ int gloableflag = 0;
             //Point2f testpoint =Point2f((320 - 0.0) * scale ,0.0*scale-90);
             //NSLog(@"test point %f %f",testpoint.x,testpoint.y);
             
-            if(frameid%5==0){
+            if(frameid%2==0){
                 //NSLog(@"time %d.",frameid);
                 _touchPointall.clear();
                 gloableflag = 0;
@@ -578,7 +579,7 @@ int gloableflag = 0;
 {
     if ([device lockForConfiguration:NULL] == YES)
     {
-        device.activeVideoMinFrameDuration = CMTimeMake(1, frameRate);
+        device.activeVideoMinFrameDuration = CMTimeMake(1, 15);
         device.activeVideoMaxFrameDuration = CMTimeMake(1, frameRate);
         [device unlockForConfiguration];
     }
@@ -715,4 +716,3 @@ int gloableflag = 0;
 }
 
 @end
-
