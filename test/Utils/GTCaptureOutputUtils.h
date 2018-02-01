@@ -25,6 +25,8 @@
 // get a cvMat image from an UIImage
 + (cv::Mat *)cvMatFromImage:(const UIImage *)img gray:(BOOL)gray;
 
++ (cv::Mat) matFromImageBuffer: (CMSampleBufferRef) buffer;
+
 // create a CGImage from a cv::Mat
 // you will need to destroy the returned object later!
 + (CGImageRef)CGImageFromCvMat:(const cv::Mat &)mat;
@@ -41,4 +43,3 @@
 + (UIImage *)imageFromSampleBuffer:(CMSampleBufferRef)sampleBuffer;
 
 @end
-

@@ -24,7 +24,7 @@
     }
     
     CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);
-    
+    NSLog(@"ROW %lu",mat->step.p[0]);
     // Creating CGImage from cv::Mat
     CGImageRef imageRef = CGImageCreate(mat->cols,                                 //width
                                         mat->rows,                                 //height
@@ -131,20 +131,53 @@
     CVPixelBufferLockBaseAddress(imgBuf, 0);
     
     // get the address to the image data
-    //    void *imgBufAddr = CVPixelBufferGetBaseAddress(imgBuf);   // this is wrong! see http://stackoverflow.com/a/4109153
-    void *imgBufAddr = CVPixelBufferGetBaseAddressOfPlane(imgBuf, 0);
+    //    void *imgBufAddr = CVPixelBufferGetBaseAddress(imgBuf);
+    // this is wrong! see http://stackoverflow.com/a/4109153
+    //void *imgBufAddr = CVPixelBufferGetBaseAddressOfPlane(imgBuf, 0);
+    void *imgBufAddr = CVPixelBufferGetBaseAddress(imgBuf);
     
     // get image properties
     int w = (int)CVPixelBufferGetWidth(imgBuf);
     int h = (int)CVPixelBufferGetHeight(imgBuf);
+    size_t bytesPerRow;
+    bytesPerRow = CVPixelBufferGetBytesPerRow(imgBuf);
+    
+    //for (int i = 0; i < (w * h); i++) {
+    // Calculate the combined grayscale weight of the RGB channels
+    //     int weight = (imgBufAddr[0] * 0.11) + (imgBufAddr[1] * 0.59) + (imgBufAddr[2] * 0.3);
+    //}
     
     // create the cv mat
-    mat.create(h, w, CV_8UC1);              // 8 bit unsigned chars for grayscale data
+    //cv::Mat mat_c= cv::Mat(h, w, CV_8UC4,imgBuf);
+    mat.create(h, w, CV_8UC4);              // 8 bit unsigned chars for grayscale data
+    //cv::Mat gray = cv::Mat(h,w,CV_8UC1);
     memcpy(mat.data, imgBufAddr, w * h);    // the first plane contains the grayscale data
+    //cv::cvtColor(mat_c,mat, CV_BGRA2GRAY);
+    //memcpy(mat.data, &gray, w * h);
+    //mat.data = gray;
     // therefore we use <imgBufAddr> as source
     
     // unlock again
     CVPixelBufferUnlockBaseAddress(imgBuf, 0);
+}
+
++ (cv::Mat) matFromImageBuffer: (CMSampleBufferRef) buffer {
+    CVImageBufferRef imgBuf = CMSampleBufferGetImageBuffer(buffer);
+    
+    cv::Mat mat ;
+    
+    CVPixelBufferLockBaseAddress(imgBuf, 0);
+    
+    void *address = CVPixelBufferGetBaseAddress(imgBuf);
+    int width = (int) CVPixelBufferGetWidth(imgBuf);
+    int height = (int) CVPixelBufferGetHeight(imgBuf);
+    
+    mat   = cv::Mat(height, width, CV_8UC4, address, 0);
+    //cv::cvtColor(mat, _mat, CV_BGRA2BGR);
+    
+    CVPixelBufferUnlockBaseAddress(imgBuf, 0);
+    
+    return mat;
 }
 
 // Create a UIImage from sample buffer data
@@ -189,4 +222,3 @@
 }
 
 @end
-

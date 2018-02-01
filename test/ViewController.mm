@@ -24,7 +24,7 @@ const int MAX_POINTS_COUNT = 4;
 int maxCount = 100;
 double qLevel = 0.1;
 double minDist = 10;
-const int32_t MAX_FPS = 24;
+const int32_t MAX_FPS = 30;
 const CGSize resolutionSize = CGSizeMake(352,288);
 
 CGFloat xScale = 1;
@@ -64,6 +64,7 @@ int gloableflag = 0;
     cv::TermCriteria            _termcrit;
     
     Mat gray;
+    Mat gray_temp;
     Mat gray_prev;
     Mat image;
     vector<uchar> status;
@@ -93,8 +94,8 @@ int gloableflag = 0;
     
     [self configureDevice:_device frameRate:MAX_FPS];
     
-    _winSize = cv::Size(31,31);
-    _termcrit = cv::TermCriteria(cv::TermCriteria::COUNT|cv::TermCriteria::EPS,20,0.03);
+    _winSize = cv::Size(15,15);
+    _termcrit = cv::TermCriteria(cv::TermCriteria::EPS|cv::TermCriteria::COUNT,10,0.03);
     
     
     [_tapGestureRecognizer requireGestureRecognizerToFail:_doubleTapGestureRecognizer];
@@ -224,8 +225,12 @@ int gloableflag = 0;
     
     videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
     //AVCaptureVideoDataOutput *videoDataOutput = [AVCaptureVideoDataOutput new];
+    //NSDictionary *newSettings =
+    //@{ (NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange) };
+    
     NSDictionary *newSettings =
-    @{ (NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange) };
+    @{ (NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA) };
+    
     videoDataOutput.videoSettings = newSettings;
     
     // create a serial dispatch queue used for the sample buffer delegate as well as when a still image is captured
@@ -286,11 +291,14 @@ int gloableflag = 0;
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
 {
-    [GTCaptureOutputUtils convertYUVSampleBuffer:sampleBuffer toGrayscaleMat:gray];
+    //[GTCaptureOutputUtils convertYUVSampleBuffer:sampleBuffer toGrayscaleMat:gray_temp];
+    gray_temp = [GTCaptureOutputUtils matFromImageBuffer:sampleBuffer];
     //connection.videoOrientation = (AVCaptureVideoOrientation)UIInterfaceOrientationLandscapeLeft;
-    
-    gray.copyTo(image);
-    
+    cv::cvtColor(gray_temp,gray, CV_BGRA2GRAY);
+    cv::cvtColor(gray_temp, image, CV_BGRA2RGB);
+    //gray_temp.copyTo(gray);
+    //gray_temp.copyTo(image);
+    //gray_temp.copyTo(image);
     [self tracking];
     
     UIImage *imageToDisplay = [GTCaptureOutputUtils imageFromCvMat:&image];
@@ -412,7 +420,7 @@ int gloableflag = 0;
             //Point2f testpoint =Point2f((320 - 0.0) * scale ,0.0*scale-90);
             //NSLog(@"test point %f %f",testpoint.x,testpoint.y);
             
-            if(frameid%2==0){
+            if(frameid%3==0){
                 //NSLog(@"time %d.",frameid);
                 _touchPointall.clear();
                 gloableflag = 0;
@@ -716,3 +724,4 @@ int gloableflag = 0;
 }
 
 @end
+
