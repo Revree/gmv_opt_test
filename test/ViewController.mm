@@ -24,7 +24,7 @@ const int MAX_POINTS_COUNT = 4;
 int maxCount = 100;
 double qLevel = 0.1;
 double minDist = 10;
-const int32_t MAX_FPS = 30;
+const int32_t MAX_FPS = 24;
 const CGSize resolutionSize = CGSizeMake(352,288);
 
 CGFloat xScale = 1;
@@ -95,7 +95,7 @@ int gloableflag = 0;
     [self configureDevice:_device frameRate:MAX_FPS];
     
     _winSize = cv::Size(15,15);
-    _termcrit = cv::TermCriteria(cv::TermCriteria::EPS|cv::TermCriteria::COUNT,10,0.03);
+    _termcrit = cv::TermCriteria(cv::TermCriteria::EPS|cv::TermCriteria::COUNT,30,0.001);
     
     
     [_tapGestureRecognizer requireGestureRecognizerToFail:_doubleTapGestureRecognizer];
@@ -391,13 +391,13 @@ int gloableflag = 0;
                                          yScale:yScale
                                          offset:videoBox.origin];
                 //NSLog(@"mouth %f %f",point_Mouth.x,point_Mouth.y);
-                NSInteger width = 10;
-                CGRect circleRect = CGRectMake(point_Mouth.x - width / 2, point_Mouth.y - width / 2, width, width);
-                UIView *circleView = [[UIView alloc] initWithFrame:circleRect];
-                circleView.layer.cornerRadius = width / 2;
-                circleView.alpha = 0.7;
-                circleView.backgroundColor = [UIColor darkGrayColor];
-                [self->overlayView addSubview:circleView];
+                //NSInteger width = 10;
+                //CGRect circleRect = CGRectMake(point_Mouth.x - width / 2, point_Mouth.y - width / 2, width, width);
+                //UIView *circleView = [[UIView alloc] initWithFrame:circleRect];
+                //circleView.layer.cornerRadius = width / 2;
+                //circleView.alpha = 0.7;
+                //circleView.backgroundColor = [UIColor darkGrayColor];
+                //[self->overlayView addSubview:circleView];
             }
             if(face.hasLeftEyePosition){
                 point_lefteye = [self scaledPoint:face.leftEyePosition
@@ -420,7 +420,7 @@ int gloableflag = 0;
             //Point2f testpoint =Point2f((320 - 0.0) * scale ,0.0*scale-90);
             //NSLog(@"test point %f %f",testpoint.x,testpoint.y);
             
-            if(frameid%3==0){
+            if(frameid%30==0){
                 //NSLog(@"time %d.",frameid);
                 _touchPointall.clear();
                 gloableflag = 0;
@@ -724,4 +724,3 @@ int gloableflag = 0;
 }
 
 @end
-
