@@ -142,19 +142,12 @@
     size_t bytesPerRow;
     bytesPerRow = CVPixelBufferGetBytesPerRow(imgBuf);
     
-    //for (int i = 0; i < (w * h); i++) {
-    // Calculate the combined grayscale weight of the RGB channels
-    //     int weight = (imgBufAddr[0] * 0.11) + (imgBufAddr[1] * 0.59) + (imgBufAddr[2] * 0.3);
-    //}
     
     // create the cv mat
-    //cv::Mat mat_c= cv::Mat(h, w, CV_8UC4,imgBuf);
-    mat.create(h, w, CV_8UC4);              // 8 bit unsigned chars for grayscale data
-    //cv::Mat gray = cv::Mat(h,w,CV_8UC1);
+    mat.create(h, w, CV_8UC1);              // 8 bit unsigned chars for grayscale data
+
     memcpy(mat.data, imgBufAddr, w * h);    // the first plane contains the grayscale data
-    //cv::cvtColor(mat_c,mat, CV_BGRA2GRAY);
-    //memcpy(mat.data, &gray, w * h);
-    //mat.data = gray;
+
     // therefore we use <imgBufAddr> as source
     
     // unlock again
