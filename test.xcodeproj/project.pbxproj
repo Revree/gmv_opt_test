@@ -17,7 +17,7 @@
 		781D307C1FEA478100AB93B2 /* testUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D307B1FEA478100AB93B2 /* testUITests.m */; };
 		781D308C1FEA493700AB93B2 /* GTPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D308B1FEA493700AB93B2 /* GTPreviewView.m */; };
 		781D30901FEA499500AB93B2 /* GTCaptureOutputUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781D308F1FEA499500AB93B2 /* GTCaptureOutputUtils.mm */; };
-		78897121202ED31900A8E8DA /* OpticaldoWork.m in Sources */ = {isa = PBXBuildFile; fileRef = 78897120202ED31900A8E8DA /* OpticaldoWork.m */; };
+		78897121202ED31900A8E8DA /* OpticaldoWork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78897120202ED31900A8E8DA /* OpticaldoWork.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +58,7 @@
 		781D308D1FEA495500AB93B2 /* GTPreviewView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTPreviewView.h; sourceTree = "<group>"; };
 		781D308E1FEA497600AB93B2 /* GTCaptureOutputUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTCaptureOutputUtils.h; sourceTree = "<group>"; };
 		781D308F1FEA499500AB93B2 /* GTCaptureOutputUtils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GTCaptureOutputUtils.mm; sourceTree = "<group>"; };
-		78897120202ED31900A8E8DA /* OpticaldoWork.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpticaldoWork.m; sourceTree = "<group>"; };
+		78897120202ED31900A8E8DA /* OpticaldoWork.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpticaldoWork.mm; sourceTree = "<group>"; };
 		78897122202ED32900A8E8DA /* OpticaldoWork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpticaldoWork.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,7 +121,7 @@
 				781D30621FEA478100AB93B2 /* LaunchScreen.storyboard */,
 				781D30651FEA478100AB93B2 /* Info.plist */,
 				781D30661FEA478100AB93B2 /* main.m */,
-				78897120202ED31900A8E8DA /* OpticaldoWork.m */,
+				78897120202ED31900A8E8DA /* OpticaldoWork.mm */,
 				78897122202ED32900A8E8DA /* OpticaldoWork.h */,
 			);
 			path = test;
@@ -298,7 +298,7 @@
 			files = (
 				781D305C1FEA478100AB93B2 /* ViewController.mm in Sources */,
 				781D30901FEA499500AB93B2 /* GTCaptureOutputUtils.mm in Sources */,
-				78897121202ED31900A8E8DA /* OpticaldoWork.m in Sources */,
+				78897121202ED31900A8E8DA /* OpticaldoWork.mm in Sources */,
 				781D30671FEA478100AB93B2 /* main.m in Sources */,
 				781D308C1FEA493700AB93B2 /* GTPreviewView.m in Sources */,
 				781D30591FEA478100AB93B2 /* AppDelegate.m in Sources */,

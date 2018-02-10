@@ -16,23 +16,30 @@ using namespace cv;
 cv::Size                    _winSize;
 cv::TermCriteria            _termcrit;
 
-Mat gray;
-cv::Mat gray_temp;
-Mat gray_prev;
+
 Mat image;
 vector<uchar>               status;
 vector<float>               err;
 
-bool _addRemovePt;
-cv::vector<cv::Point2f> points[2];
 
+//These four component should be global
+bool _addRemovePt = true;
+cv::vector<cv::Point2f> points[2];
+Mat gray;
+Mat gray_prev;
+
+// Input: GMVinputPoints: correct detection results from GMV
+//        CurrentFrame: coordinate frame with the correct results
+//        Update: whether there is a new result come in
 +(NSArray*)OpticalFlowdowork:(NSArray<NSValue *>*)GMVinputPoints :(CGImageRef)CurrentFrame
 {
     NSArray* newPoints;
-    _winSize = cv::Size(31,31);
+    _winSize = cv::Size(15,15);
     _termcrit = cv::TermCriteria(cv::TermCriteria::EPS|cv::TermCriteria::COUNT,20,0.01);
+    
     //creat UIimage from input CGimage
     UIImage *grayui = [UIImage imageWithCGImage:CurrentFrame];
+    
     //convert UIimage to opencv gray mat
     gray =* [GTCaptureOutputUtils cvMatFromImage:grayui gray:true];
     
@@ -44,7 +51,8 @@ cv::vector<cv::Point2f> points[2];
         CGPoint point = [value CGPointValue];
         _touchPointall.push_back(cv::Point2f(point.x,point.y));
     }
-    //these mat should be global.
+    
+    //These mats should be global.
     //Mat gray;
     //Mat gray_prev;
     
@@ -62,36 +70,41 @@ cv::vector<cv::Point2f> points[2];
         calcOpticalFlowPyrLK(gray_prev, gray, points[0],points[1], status, err, _winSize, 3, _termcrit, 0, 0.001);
         
         size_t i;
+        //if new result comes in, then check with the tracking results, or just do tracking
+        
         for(i = 0; i<_touchPointall.size();i++)
         {
-            if( _touchPointall[i]==cv::Point2f(288,-90)){
-                continue;
-            }
-            if(norm(_touchPointall[i]-points[1][i])<=3)
+            if(_addRemovePt)
             {
-                NSLog(@"accpeted");
+                if( _touchPointall[i]==cv::Point2f(288,-80)){
+                    continue;
+                }
+                if(norm(_touchPointall[i]-points[1][i])<=3)
+                {
+                    NSLog(@"accpeted");
+                }
                 
+                if(norm(_touchPointall[i] - points[1][i])>= 10 && norm(_touchPointall[i] - points[1][i])<=20)
+                {
+                    points[1][i]=Point2f((points[1][i].x + _touchPointall[i].x)/2.0,(points[1][i].y+ _touchPointall[i].y)/2.0);
+                    points[1][i] = _touchPointall[i];
+                    NSLog(@"wrong points, adjusting");
+                }
+                if(norm(_touchPointall[i] - points[1][i])>20)
+                {
+                    points[1][i] = _touchPointall[i];
+                    NSLog(@"FATALE ERROR");
+                }
             }
-            
-            if(norm(_touchPointall[i] - points[1][i])>= 10 && norm(_touchPointall[i] - points[1][i])<=20)
-            {
-                points[1][i]=Point2f((points[1][i].x + _touchPointall[i].x)/2.0,(points[1][i].y+ _touchPointall[i].y)/2.0);
-                points[1][i] = _touchPointall[i];
-                NSLog(@"wrong points, adjusting");
-            }
-            if(norm(_touchPointall[i] - points[1][i])>20){
-                points[1][i] = _touchPointall[i];
-                NSLog(@"FATALE ERROR");
-            }
-            
             if(!status[i])
                 continue;
             circle(image, points[1][i], 5, cv::Scalar(0,255,0), -1, 8);
         }
+        
     }
     
-    //for first init, put GMV results in points[1]
-    if(points[0].empty())
+    //for first init or give new results, put GMV results in points[1]
+    if(_addRemovePt)
     {
         //test code -- upload points
         for(size_t i=0;i < _touchPointall.size();i++){
