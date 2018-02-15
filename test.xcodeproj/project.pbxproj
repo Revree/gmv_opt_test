@@ -25,6 +25,10 @@
 		7889712D2035F6BF00A8E8DA /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889712C2035F6BF00A8E8DA /* Accelerate.framework */; };
 		7889712F2035F6C700A8E8DA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889712E2035F6C700A8E8DA /* AVFoundation.framework */; };
 		788971312035F6D600A8E8DA /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971302035F6D600A8E8DA /* CoreMedia.framework */; };
+		788971332035F70A00A8E8DA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971322035F70A00A8E8DA /* QuartzCore.framework */; };
+		788971352035F71800A8E8DA /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971342035F71800A8E8DA /* AssetsLibrary.framework */; };
+		788971372035F77D00A8E8DA /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971362035F77D00A8E8DA /* libc++.1.dylib */; };
+		788971392035F79700A8E8DA /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971382035F79700A8E8DA /* libjpeg.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +78,10 @@
 		7889712C2035F6BF00A8E8DA /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		7889712E2035F6C700A8E8DA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		788971302035F6D600A8E8DA /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		788971322035F70A00A8E8DA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		788971342035F71800A8E8DA /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		788971362035F77D00A8E8DA /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../../usr/lib/libc++.1.dylib"; sourceTree = "<group>"; };
+		788971382035F79700A8E8DA /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../gmv_opt/libjpeg.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +89,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				788971392035F79700A8E8DA /* libjpeg.a in Frameworks */,
+				788971372035F77D00A8E8DA /* libc++.1.dylib in Frameworks */,
+				788971352035F71800A8E8DA /* AssetsLibrary.framework in Frameworks */,
+				788971332035F70A00A8E8DA /* QuartzCore.framework in Frameworks */,
 				788971312035F6D600A8E8DA /* CoreMedia.framework in Frameworks */,
 				7889712F2035F6C700A8E8DA /* AVFoundation.framework in Frameworks */,
 				7889712D2035F6BF00A8E8DA /* Accelerate.framework in Frameworks */,
@@ -188,6 +200,10 @@
 		788971232035F62800A8E8DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				788971382035F79700A8E8DA /* libjpeg.a */,
+				788971362035F77D00A8E8DA /* libc++.1.dylib */,
+				788971342035F71800A8E8DA /* AssetsLibrary.framework */,
+				788971322035F70A00A8E8DA /* QuartzCore.framework */,
 				788971302035F6D600A8E8DA /* CoreMedia.framework */,
 				7889712E2035F6C700A8E8DA /* AVFoundation.framework */,
 				7889712C2035F6BF00A8E8DA /* Accelerate.framework */,
