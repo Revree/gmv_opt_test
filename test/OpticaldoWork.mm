@@ -70,7 +70,7 @@ Mat gray_prev;
         calcOpticalFlowPyrLK(gray_prev, gray, points[0],points[1], status, err, _winSize, 3, _termcrit, 0, 0.001);
         
         size_t i;
-        //if new result comes in, then check with the tracking results, or just do tracking
+        //if new result comes in, then check with the tracking results, else just do tracking
         
         for(i = 0; i<_touchPointall.size();i++)
         {

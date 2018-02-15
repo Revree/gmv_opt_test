@@ -18,6 +18,9 @@
 		781D308C1FEA493700AB93B2 /* GTPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D308B1FEA493700AB93B2 /* GTPreviewView.m */; };
 		781D30901FEA499500AB93B2 /* GTCaptureOutputUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781D308F1FEA499500AB93B2 /* GTCaptureOutputUtils.mm */; };
 		78897121202ED31900A8E8DA /* OpticaldoWork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78897120202ED31900A8E8DA /* OpticaldoWork.mm */; };
+		788971252035F62900A8E8DA /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971242035F62900A8E8DA /* CoreVideo.framework */; };
+		788971272035F63700A8E8DA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971262035F63700A8E8DA /* CoreGraphics.framework */; };
+		788971292035F64F00A8E8DA /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971282035F64F00A8E8DA /* CoreImage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +63,9 @@
 		781D308F1FEA499500AB93B2 /* GTCaptureOutputUtils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GTCaptureOutputUtils.mm; sourceTree = "<group>"; };
 		78897120202ED31900A8E8DA /* OpticaldoWork.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpticaldoWork.mm; sourceTree = "<group>"; };
 		78897122202ED32900A8E8DA /* OpticaldoWork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpticaldoWork.h; sourceTree = "<group>"; };
+		788971242035F62900A8E8DA /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		788971262035F63700A8E8DA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		788971282035F64F00A8E8DA /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +73,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				788971292035F64F00A8E8DA /* CoreImage.framework in Frameworks */,
+				788971272035F63700A8E8DA /* CoreGraphics.framework in Frameworks */,
+				788971252035F62900A8E8DA /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +103,7 @@
 				781D306F1FEA478100AB93B2 /* testTests */,
 				781D307A1FEA478100AB93B2 /* testUITests */,
 				781D30551FEA478100AB93B2 /* Products */,
+				788971232035F62800A8E8DA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,6 +171,16 @@
 				781D308F1FEA499500AB93B2 /* GTCaptureOutputUtils.mm */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		788971232035F62800A8E8DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				788971282035F64F00A8E8DA /* CoreImage.framework */,
+				788971262035F63700A8E8DA /* CoreGraphics.framework */,
+				788971242035F62900A8E8DA /* CoreVideo.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
