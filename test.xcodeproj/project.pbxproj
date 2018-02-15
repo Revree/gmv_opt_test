@@ -21,6 +21,10 @@
 		788971252035F62900A8E8DA /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971242035F62900A8E8DA /* CoreVideo.framework */; };
 		788971272035F63700A8E8DA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971262035F63700A8E8DA /* CoreGraphics.framework */; };
 		788971292035F64F00A8E8DA /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971282035F64F00A8E8DA /* CoreImage.framework */; };
+		7889712B2035F6B400A8E8DA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889712A2035F6B400A8E8DA /* UIKit.framework */; };
+		7889712D2035F6BF00A8E8DA /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889712C2035F6BF00A8E8DA /* Accelerate.framework */; };
+		7889712F2035F6C700A8E8DA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7889712E2035F6C700A8E8DA /* AVFoundation.framework */; };
+		788971312035F6D600A8E8DA /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788971302035F6D600A8E8DA /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +70,10 @@
 		788971242035F62900A8E8DA /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		788971262035F63700A8E8DA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		788971282035F64F00A8E8DA /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		7889712A2035F6B400A8E8DA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7889712C2035F6BF00A8E8DA /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		7889712E2035F6C700A8E8DA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		788971302035F6D600A8E8DA /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +81,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				788971312035F6D600A8E8DA /* CoreMedia.framework in Frameworks */,
+				7889712F2035F6C700A8E8DA /* AVFoundation.framework in Frameworks */,
+				7889712D2035F6BF00A8E8DA /* Accelerate.framework in Frameworks */,
+				7889712B2035F6B400A8E8DA /* UIKit.framework in Frameworks */,
 				788971292035F64F00A8E8DA /* CoreImage.framework in Frameworks */,
 				788971272035F63700A8E8DA /* CoreGraphics.framework in Frameworks */,
 				788971252035F62900A8E8DA /* CoreVideo.framework in Frameworks */,
@@ -176,6 +188,10 @@
 		788971232035F62800A8E8DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				788971302035F6D600A8E8DA /* CoreMedia.framework */,
+				7889712E2035F6C700A8E8DA /* AVFoundation.framework */,
+				7889712C2035F6BF00A8E8DA /* Accelerate.framework */,
+				7889712A2035F6B400A8E8DA /* UIKit.framework */,
 				788971282035F64F00A8E8DA /* CoreImage.framework */,
 				788971262035F63700A8E8DA /* CoreGraphics.framework */,
 				788971242035F62900A8E8DA /* CoreVideo.framework */,
